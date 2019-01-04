@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 配置文件路径 -->
+    <properties resource="workspace/dongzj/test/config.properties"/>
+    <classPathEntry location="${classPath}" />
+    <context id="default" defaultModelType="flat" targetRuntime="MyBatis3" >
+        <property name="autoDelimitKeywords" value="false"/>
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <plugin type="com.hellomrpc.mybatis.generator.plugins.ExampleTargetPlugin"/>
+
+        <!-- example类自定义包名、类名 -->
+        <plugin type="com.hellomrpc.mybatis.generator.plugins.ExampleTargetPlugin"/>
+        <!-- dao类自定义包名、类名 -->
+        <plugin type="com.hellomrpc.mybatis.generator.plugins.DaoTargetPlugin"/>
+        <!-- 自定义注释插件,这个地址千万不能填错，否则不报错 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.CommentPlugin">
+            <property name="template" value="src/main/resources/simple-comment.ftl"/>
+        </plugin>
+        <!-- 数据Model属性对应Column获取插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>
+        <!-- 数据Model链式构建插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelBuilderPlugin"/>
+        <!-- Example Criteria 增强插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin"/>
+        <!-- 查询结果选择性返回插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectSelectivePlugin"/>
+        <!-- Selective选择插入更新增强插件！请配在所有插件末尾以便最后执行 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectiveEnhancedPlugin"/>
+        <!--&lt;!&ndash; createTime自动更新插件 &ndash;&gt;-->
+        <plugin type="com.hellomrpc.mybatis.generator.plugins.AutoCreateTimePlugin">
+            <!-- 创建时间字段名称 -->
+            <property name="createTimeColumnName" value="gmt_create"/>
+            <!-- 修改时间字段名称 -->
+            <property name="modifiedTimeColumnName" value="gmt_modified"/>
+        </plugin>
+        <!-- modifiedTime自动更新插件 -->
+        <plugin type="com.hellomrpc.mybatis.generator.plugins.AutoModifiedTimePlugin">
+            <!-- 创建时间字段名称 -->
+            <property name="createTimeColumnName" value="gmt_create"/>
+            <!-- 修改时间字段名称 -->
+            <property name="modifiedTimeColumnName" value="gmt_modified"/>
+        </plugin>
+        <!-- 批量插入插件 -->
+        <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin">
+            <!--
+            开启后可以实现官方插件根据属性是否为空决定是否插入该字段功能
+            ！需开启allowMultiQueries=true多条sql提交操作，所以不建议使用！插件默认不开启
+            -->
+            <property name="allowMultiQueries" value="false"/>
+        </plugin>
+
+        <commentGenerator >
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <jdbcConnection driverClass="${jdbc_driver}"
+                        connectionURL="${jdbc_url}" userId="${jdbc_user}"
+                        password="${jdbc_password}" />
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="true"/>
+        </javaTypeResolver>
+
+        <!-- bean实体类 -->
+        <javaModelGenerator targetPackage="com.dongzj.common.dongzj.vo"
+                            targetProject="${target}/java" >
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- xml文件 -->
+        <sqlMapGenerator targetPackage="mapper.article"
+                         targetProject="${target}/resources" >
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!-- 接口 -->
+        <javaClientGenerator targetPackage="com.dongzj.common.dongzj.dao"
+                             targetProject="${target}/java" type="XMLMAPPER" >
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+
+        <!-- 只需要配置下面部分 -->
+        <table tableName="t_article" domainObjectName="Article">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+    </context>
+</generatorConfiguration>
